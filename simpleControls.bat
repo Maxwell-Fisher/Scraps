@@ -1,109 +1,30 @@
-@echo off
-cls
-color F0
+::This works a bit better now, I may do something with it
+echo off
+::color F0
 title Simple controls - @Maxwellcrafter
 chcp 65001
+for /F %%a in ('echo prompt $E ^| cmd') do set "esc=%%a"
+setLocal enableDelayedExpansion
+mode 15, 10
+cls
 
 set input=null
 set pos_x=0
 set pos_y=0
 
-set default-4-4=`
-set default-4-3='
-set default-4-2=,
-set default-4-1=.
-set default-40=`
-set default-41='
-set default-42=,
-set default-43=.
-set default-44=`
-set default-3-4='
-set default-3-3=,
-set default-3-2=.
-set default-3-1=`
-set default-30='
-set default-31=,
-set default-32=.
-set default-33=`
-set default-34='
-set default-2-4=,
-set default-2-3=.
-set default-2-2=`
-set default-2-1='
-set default-20=,
-set default-21=.
-set default-22=`
-set default-23='
-set default-24=,
-set default-1-4=.
-set default-1-3=`
-set default-1-2='
-set default-1-1=,
-set default-10=.
-set default-11=`
-set default-12='
-set default-13=,
-set default-14=.
-set default0-4=`
-set default0-3='
-set default0-2=,
-set default0-1=.
-set default00=`
-set default01='
-set default02=,
-set default03=.
-set default04=`
-set default1-4='
-set default1-3=,
-set default1-2=.
-set default1-1=`
-set default10='
-set default11=,
-set default12=.
-set default13=`
-set default14='
-set default2-4=,
-set default2-3=.
-set default2-2=`
-set default2-1='
-set default20=,
-set default21=.
-set default22=`
-set default23='
-set default24=,
-set default3-4=.
-set default3-3=`
-set default3-2='
-set default3-1=,
-set default30=.
-set default31=`
-set default32='
-set default33=,
-set default34=.
-set default4-4=`
-set default4-3='
-set default4-2=,
-set default4-1=.
-set default40=`
-set default41='
-set default42=,
-set default43=.
-set default44=`
 
-
-
-
-set player=▲
-
-
+set player=!esc![31;1m▲!esc![0m
 
 :input
 
-cls
-echo Use Your number pad to move (5, 1, 2, ^& 3)
-echo %input%
-echo %pos_x% %pos_y%
-echo.
+echo !esc![1;1H
+echo !esc![?25l
+
+::cls
+::echo Use Your number pad to move (5, 1, 2, ^& 3)
+::echo %input%
+::echo %pos_x% %pos_y%
+::echo.
 
 set space-4-4=`
 set space-4-3='
@@ -202,18 +123,18 @@ echo %space-4-4%%space-3-4%%space-2-4%%space-1-4%%space0-4%%space1-4%%space2-4%%
 
 
 set input=null
-choice /c 1234567890 >nul
+choice /c wsad >nul
 set input=%ERRORLEVEL%
 
-if "%input%" == "5" if "%player%" == "▲" set /a pos_y = %pos_y% + 1
-if "%input%" == "2" if "%player%" == "▼" set /a pos_y = %pos_y% - 1
-if "%input%" == "1" if "%player%" == "◄" set /a pos_x = %pos_x% - 1
-if "%input%" == "3" if "%player%" == "►" set /a pos_x = %pos_x% + 1
+if "%input%" == "1" if "%player%" == "!esc![31;1m▲!esc![0m" set /a pos_y = %pos_y% + 1
+if "%input%" == "2" if "%player%" == "!esc![31;1m▼!esc![0m" set /a pos_y = %pos_y% - 1
+if "%input%" == "3" if "%player%" == "!esc![31;1m◄!esc![0m" set /a pos_x = %pos_x% - 1
+if "%input%" == "4" if "%player%" == "!esc![31;1m►!esc![0m" set /a pos_x = %pos_x% + 1
 
-if "%input%" == "5" if not "%player%" == "▼" set player=▲
-if "%input%" == "2" if not "%player%" == "▲" set player=▼
-if "%input%" == "1" if not "%player%" == "►" set player=◄
-if "%input%" == "3" if not "%player%" == "◄" set player=►
+if "%input%" == "1" if not "%player%" == "!esc![31;1m▼!esc![0m" set player=!esc![31;1m▲!esc![0m
+if "%input%" == "2" if not "%player%" == "!esc![31;1m▲!esc![0m" set player=!esc![31;1m▼!esc![0m
+if "%input%" == "3" if not "%player%" == "!esc![31;1m►!esc![0m" set player=!esc![31;1m◄!esc![0m
+if "%input%" == "4" if not "%player%" == "!esc![31;1m◄!esc![0m" set player=!esc![31;1m►!esc![0m
 
 
 
