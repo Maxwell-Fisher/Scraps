@@ -1,12 +1,11 @@
 ::This works a bit better now, I may do something with it
 echo off
-::color F0
 title Simple controls - @Maxwellcrafter
 chcp 65001
 for /F %%a in ('echo prompt $E ^| cmd') do set "esc=%%a"
 setLocal enableDelayedExpansion
 mode 15, 10
-cls
+echo !esc![?25l!esc![2j
 
 set input=null
 set pos_x=0
@@ -18,13 +17,7 @@ set player=!esc![31;1m▲!esc![0m
 :input
 
 echo !esc![1;1H
-echo !esc![?25l
 
-::cls
-::echo Use Your number pad to move (5, 1, 2, ^& 3)
-::echo %input%
-::echo %pos_x% %pos_y%
-::echo.
 
 set space-4-4=`
 set space-4-3='
