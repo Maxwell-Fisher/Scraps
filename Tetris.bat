@@ -9,6 +9,8 @@ chcp 65001
 echo !esc![?25l
 set score=0
 set lines=0
+set playerX=5
+set playerY=5
 echo off
 cls
 
@@ -30,6 +32,8 @@ set orange=!esc![48;5;208m!esc![38;5;208m !esc![48;5;243m!esc![38;5;15m
 set green=!esc![48;5;82m!esc![38;5;82m !esc![48;5;243m!esc![38;5;15m
 set purple=!esc![48;5;165m!esc![38;5;165m !esc![48;5;243m!esc![38;5;15m
 set red=!esc![48;5;196m!esc![38;5;196m !esc![48;5;243m!esc![38;5;15m
+
+set playerColour=!blue!
 
 for /l %%w in (2, 1, !height!) do (
 	for /l %%x in (2, 1, !doubleUp!) do (
@@ -69,11 +73,21 @@ echo !esc![21;3H!orange!!orange!!red!!red!!green!!green!
 echo !esc![22;3H!orange!!blue!!blue!!blue!!blue!!green!!green!
 ::goto clear
 
-choice /CS /T 1 /D !inputArray:~0,1! /c !inputArray! >nul
+choice /CS /T 1 /D !inputArray:~52,1! /c !inputArray! >nul
 set level=%errorlevel%
 set /a level=level-1
 set output=!inputArray:~%level%,1!
-echo !esc![0m!esc![23;16H!output!
+
+if "!output!" == "w" if !playerY! GTR 3 set /a playerY=playerY-1
+if "!output!" == "s" if !playerY! LSS 22 set /a playerY=playerY+1
+if "!output!" == "a" if !playerX! GTR 3 set /a playerX=playerX-1
+if "!output!" == "d" if !playerX! LSS 13 set /a playerX=playerX+1
+
+echo !esc![0m!esc![2;24H!output!
+echo !esc![0m!esc![3;24H!playerX!
+echo !esc![0m!esc![4;24H!playerY!
+echo !esc![!playerY!;!playerX!H!playerColour!
+
 
 goto loop
 
