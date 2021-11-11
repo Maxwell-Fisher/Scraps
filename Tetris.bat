@@ -2,7 +2,10 @@
 title Tetris - @Maxwellcrafter
 for /F %%a in ('echo prompt $E ^| cmd') do set "esc=%%a"
 setLocal enableDelayedExpansion
+::set inputArray=aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüý
+set inputArray=aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789
 mode con: cols=26 lines=28
+chcp 65001
 echo !esc![?25l
 set score=0
 set lines=0
@@ -47,8 +50,8 @@ for /l %%w in (3, 1, !heightDown!) do (
 
 :loop
 
-if !score! LSS 1337 set /a "score=score+1"
-if !lines! LSS 123 set /a "lines=lines+1"
+if !score! LSS 420 set /a "score=score+1"
+if !lines! LSS 69 set /a "lines=lines+1"
 
 
 set printScore=00000!score!
@@ -59,7 +62,6 @@ set printLines=00000!lines!
 echo !esc![5;17H!esc![48;5;232m!esc![38;5;15mLines:!esc![0m
 echo !esc![6;17H!esc![48;5;232m!esc![38;5;15m!printLines:~-6!!esc![0m
 
-
 echo !esc![18;3H!purple! !yellow!!yellow!
 echo !esc![19;3H!purple!!purple!!yellow!!red!!yellow!!yellow!
 echo !esc![20;3H!purple!!orange!!yellow!!red!!yellow!!yellow!
@@ -67,22 +69,14 @@ echo !esc![21;3H!orange!!orange!!red!!red!!green!!green!
 echo !esc![22;3H!orange!!blue!!blue!!blue!!blue!!green!!green!
 ::goto clear
 
+choice /CS /T 1 /D !inputArray:~0,1! /c !inputArray! >nul
+set level=%errorlevel%
+set /a level=level-1
+set output=!inputArray:~%level%,1!
+echo !esc![0m!esc![23;16H!output!
+
 goto loop
 
-pause >nul
+pause
+exit
 
-set "doubleUp="
-
-:a
-	for /l %%y in (3, 1, !heightDown!) do (
-		for /l %%z in (3, 1, !up!) do (
-			if "!bw!"=="1" (
-				set /a "value=(!random!%%(255-240+1))+240"
-				echo !esc![%%y;%%zH!esc![48;5;!value!m !esc![0m
-			) else (
-				echo !esc![%%y;%%zH!esc![48;5;!random:~1,2!m!esc![35;5;!random:~1,2!m !esc![0m
-			)
-			if "!slowdown!"=="1" ping 127.1 -n 1 >nul
-		)
-	)
-goto a
