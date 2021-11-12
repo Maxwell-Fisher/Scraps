@@ -11,6 +11,7 @@ set score=0
 set lines=0
 set playerX=5
 set playerY=5
+set output=0
 echo off
 cls
 
@@ -77,9 +78,9 @@ if "!output!" == "2" if !playerY! LSS 22 set /a playerY=playerY+1
 if "!output!" == "1" if !playerX! GTR 3 set /a playerX=playerX-1
 if "!output!" == "3" if !playerX! LSS 13 set /a playerX=playerX+1
 
-echo !esc![0m!esc![2;24H!output!
-echo !esc![0m!esc![3;24H!playerX!
-echo !esc![0m!esc![4;24H!playerY!
+echo !esc![0m!esc![21;16H!output!
+echo !esc![0m!esc![22;16H!playerX! 
+echo !esc![0m!esc![23;16H!playerY! 
 echo !esc![!playerY!;!playerX!H!playerColour!
 
 choice /CS /T 1 /D !inputArray:~52,1! /c !inputArray! >nul
