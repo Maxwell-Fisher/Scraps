@@ -44,13 +44,7 @@ for /l %%w in (2, 1, !height!) do (
 echo !esc![1;7H!esc![48;5;232m!esc![38;5;238m@Maxwellcrafter!esc![0m
 
 
-
-:clear
-for /l %%w in (3, 1, !heightDown!) do (
-	for /l %%x in (3, 1, !up!) do (
-		echo !esc![%%w;%%xH!esc![48;5;243m!esc![38;5;15m !esc![0m
-	)
-)
+call :clear
 
 :loop
 
@@ -73,24 +67,37 @@ echo !esc![21;3H!orange!!orange!!red!!red!!green!!green!
 echo !esc![22;3H!orange!!blue!!blue!!blue!!blue!!green!!green!
 ::goto clear
 
-choice /CS /T 1 /D !inputArray:~52,1! /c !inputArray! >nul
-set level=%errorlevel%
-set /a level=level-1
-set output=!inputArray:~%level%,1!
-
 if "!output!" == "w" if !playerY! GTR 3 set /a playerY=playerY-1
 if "!output!" == "s" if !playerY! LSS 22 set /a playerY=playerY+1
 if "!output!" == "a" if !playerX! GTR 3 set /a playerX=playerX-1
 if "!output!" == "d" if !playerX! LSS 13 set /a playerX=playerX+1
+
+if "!output!" == "5" if !playerY! GTR 3 set /a playerY=playerY-1
+if "!output!" == "2" if !playerY! LSS 22 set /a playerY=playerY+1
+if "!output!" == "1" if !playerX! GTR 3 set /a playerX=playerX-1
+if "!output!" == "3" if !playerX! LSS 13 set /a playerX=playerX+1
 
 echo !esc![0m!esc![2;24H!output!
 echo !esc![0m!esc![3;24H!playerX!
 echo !esc![0m!esc![4;24H!playerY!
 echo !esc![!playerY!;!playerX!H!playerColour!
 
+choice /CS /T 1 /D !inputArray:~52,1! /c !inputArray! >nul
+set level=%errorlevel%
+set /a level=level-1
+set output=!inputArray:~%level%,1!
+
+call :clear
 
 goto loop
 
 pause
 exit
 
+:clear
+for /l %%w in (3, 1, !heightDown!) do (
+	for /l %%x in (3, 1, !up!) do (
+		echo !esc![%%w;%%xH!esc![48;5;243m!esc![38;5;15m !esc![0m
+	)
+)
+exit /B
