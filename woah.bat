@@ -1,3 +1,6 @@
+::Spiral test thing
+::Made by Maxwell Fisher
+::Copywrite 2023 @Maxwellcrafter, do what you want though I don't care
 @echo off
 cls
 mode 120, 60
